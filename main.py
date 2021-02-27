@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import requests
 import random
 import os
+import time
 
 # токен бота
 TOKEN = '1359352161:AAGfRbAcMSKTomuzNGStpWjoiBoD7e58cKY'
@@ -182,5 +183,10 @@ def callback(call):
 
     
     
-
-bot.polling(none_stop=True, interval=0)
+if __name__ == '__main__':
+    while True:
+        try:
+            bot.polling(none_stop=True, interval=0)
+        except Exception as e:
+            time.sleep(3)
+            print(e)
