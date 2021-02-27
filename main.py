@@ -107,7 +107,6 @@ def callback(call):
     
     # Новости 
     elif call.data == 'news':
-        bot.send_message(call.message.chat.id, 'Рекоммендации для Макса')
         URL_NEWS = 'https://ria.ru/world/'
         page = requests.get(URL_NEWS)
         soup = BeautifulSoup(page.text, 'html.parser')
