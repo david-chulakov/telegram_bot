@@ -14,9 +14,9 @@ TOKEN = '1359352161:AAGfRbAcMSKTomuzNGStpWjoiBoD7e58cKY'
 bot = telebot.TeleBot(TOKEN)
 
 # Метод, который получает и обрабатывает сообщение
-@bot.message_handler(content_types=['text'])
+@bot.message_handler(commands=['start', 'help'])
 def welcome_message(message):
-    if message.text == "Привет, я друг" or message.text == 'привет я друг':
+    if message.text == "/start" or message.text == 'start':
         # отправка сообщения 
         bot.send_message(message.from_user.id, "Привет!")
         # Создаем кнопки
@@ -42,23 +42,16 @@ def welcome_message(message):
         # Кнопка для Димы
         key_Dima = types.InlineKeyboardButton(text='Дима', callback_data='culture')
         keyboard.add(key_Dima)
-
-        bot.send_message(message.from_user.id, "Выбери свое имя :)", reply_markup=keyboard)
-    
-    elif message.text == "/help":
-        bot.send_message(message.from_user.id, "Если ты друг, то напиши Привет, я друг. Если ты не друг, пиши Привет")
-
-    elif message.text == 'Привет':
-        bot.send_message(message.from_user.id, "Привет! Я Давид :)")
         # Создаем кнопки
-        keyboard = types.InlineKeyboardMarkup()
         # Кнопка для новостей
         key_news = types.InlineKeyboardButton(text='Новости', callback_data='global_news')
         keyboard.add(key_news)
         bot.send_message(message.from_user.id, 'Выбери, что бы хотел посмотреть', reply_markup=keyboard)
 
+    elif message.text == "/help":
+        bot.send_message(message.from_user.id, "Напиши /start.")
     else: 
-        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /help.")
+        bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /start.")
 
 
 
