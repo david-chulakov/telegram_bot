@@ -21,31 +21,14 @@ def welcome_message(message):
         bot.send_message(message.from_user.id, "Привет!")
         # Создаем кнопки
         keyboard = types.InlineKeyboardMarkup()
-        # Кнопка для Давида
-        key_David = types.InlineKeyboardButton(text='Давид', callback_data='programming')
-        keyboard.add(key_David)
-        # Кнопка для Сани
-        key_Canya = types.InlineKeyboardButton(text='Саня', callback_data='memes')
-        keyboard.add(key_Canya)
-        # Кнопка для Макса
-        key_Maks = types.InlineKeyboardButton(text='Макс', callback_data='news')
-        keyboard.add(key_Maks)
-        # Кнопка для Лёхи
-        key_Alexei = types.InlineKeyboardButton(text='Лёха', callback_data='mma')
-        keyboard.add(key_Alexei)
-        # Кнопка для Арины
-        key_Arina = types.InlineKeyboardButton(text='Арина', callback_data='mus')
-        keyboard.add(key_Arina)
-        # Кнопка для Дэна
-        key_Den = types.InlineKeyboardButton(text='Дэн', callback_data='habr')
-        keyboard.add(key_Den)
-        # Кнопка для Димы
-        key_Dima = types.InlineKeyboardButton(text='Дима', callback_data='culture')
-        keyboard.add(key_Dima)
         # Создаем кнопки
         # Кнопка для новостей
         key_news = types.InlineKeyboardButton(text='Новости', callback_data='global_news')
         keyboard.add(key_news)
+        # Кнопка для купонов кфс
+        key_kfc = types.InlineKeyboardButton(text="Купоны KFC", callback_data='kfc')
+        keyboard.add(key_kfc)
+
         bot.send_message(message.from_user.id, 'Выбери, что бы хотел посмотреть', reply_markup=keyboard)
 
     elif message.text == "/help":
@@ -54,11 +37,10 @@ def welcome_message(message):
         bot.send_message(message.from_user.id, "Я тебя не понимаю. Напиши /start.")
 
 
-
+# Ответы на кнопки
 @bot.callback_query_handler(func=lambda call: True)
 def callback(call):
-
-    # Новости программирования для Давида
+    # Новости программирования 
     if call.data == 'programming':
         bot.send_message(call.message.chat.id, 'Рекоммендации для Давида')
         URL_PROGRAMMING = 'https://tproger.ru/tag/python/'
@@ -78,7 +60,7 @@ def callback(call):
         for mem in memes[1:10]:
             bot.send_photo(call.message.chat.id, mem['src'])
         
-    # Новости для Лёхи
+    # Новости бокса/мма
     elif call.data == 'mma':
         bot.send_message(call.message.chat.id, 'Рекоммендации для Лёши')
         URL_MMA = "https://allboxing.ru/mma-news.html"
@@ -88,7 +70,7 @@ def callback(call):
         for new in news[0:3]:
             bot.send_message(call.message.chat.id, f"https://allboxing.ru/{new['href']}")
 
-    # Новости с хабра для Дэна
+    # Новости с хабра 
     elif call.data == 'habr':
         bot.send_message(call.message.chat.id, 'Рекоммендации для Дэна')
         URL_HABR = 'https://habr.com/ru/all/'
@@ -108,7 +90,7 @@ def callback(call):
         for new in news[0:3]:
             bot.send_message(call.message.chat.id, new['href'])
 
-    # Кнопка для Арины
+    # Новости музыки
     elif call.data == 'mus':
         bot.send_message(call.message.chat.id, 'Рекоммендации для Арины')
         URL_MUSIC = "https://www.gq.ru/entertainment/music"
@@ -118,7 +100,7 @@ def callback(call):
         for html in music_news[17:22:2]:
             bot.send_message(call.message.chat.id, f"https://www.gq.ru{html['href']}")
         
-
+    # Новости культуры
     elif call.data == 'culture':
         bot.send_message(call.message.chat.id, 'Рекоммендации для Димы')
         URL_CULTURE = "https://www.culture.ru/news"
@@ -130,13 +112,31 @@ def callback(call):
 
         
 
-    # Новостные категории для любого пользователя
+    # Новостные категории
     elif call.data == 'global_news':
         keyboard_news = types.InlineKeyboardMarkup()
-        # Кнопка для новостей футбола
+        # Кнопка Программирование
+        key_Prog = types.InlineKeyboardButton(text='Программирование', callback_data='programming')
+        keyboard_news.add(key_Prog)
+        # Кнопка Мем
+        key_Meme = types.InlineKeyboardButton(text='Мем', callback_data='memes')
+        keyboard_news.add(key_Meme)
+        # Кнопка Бокс/ММА
+        key_MMA = types.InlineKeyboardButton(text='Бокс/ММА', callback_data='mma')
+        keyboard_news.add(key_MMA)
+        # Кнопка Музыка
+        key_Music = types.InlineKeyboardButton(text='Музыка', callback_data='mus')
+        keyboard_news.add(key_Music)
+        # Кнопка Хабр
+        key_Habr = types.InlineKeyboardButton(text='Хабр', callback_data='habr')
+        keyboard_news.add(key_Habr)
+        # Кнопка Культура
+        key_Cult = types.InlineKeyboardButton(text='Культура', callback_data='culture')
+        keyboard_news.add(key_Cult)
+        # Кнопка Футбол
         key_football = types.InlineKeyboardButton(text='Футбол', callback_data='football')
         keyboard_news.add(key_football)
-        # кнопка для новостей баскетбола
+        # кнопка Баскетбол
         key_basketball = types.InlineKeyboardButton(text='Басктебол', callback_data='basketball')
         keyboard_news.add(key_basketball)
         # Политика
@@ -145,6 +145,7 @@ def callback(call):
         # Просто новости в мире
         key_news = types.InlineKeyboardButton(text='Просто новости в мире', callback_data='news')
         keyboard_news.add(key_news)
+
         bot.send_message(call.message.chat.id, 'Выбери, категорию', reply_markup=keyboard_news)
     
     # Новости футбола
@@ -174,7 +175,40 @@ def callback(call):
         for html in politic_news_htmls[0:5]:
             bot.send_message(call.message.chat.id, html['href'])
 
-    
+    # Кнопка Купоны KFC
+    elif call.data == 'kfc':
+        i = random.randint(1,10)
+        bot.send_message(call.message.chat.id, get_kfc(i))
+        keyboard_kfc = types.InlineKeyboardMarkup()
+        key_next = types.InlineKeyboardButton(text="Следующий", callback_data='next_kfc')
+        keyboard_kfc.add(key_next)
+        bot.send_message(call.message.chat.id, "Дальше?", reply_markup=keyboard_kfc)
+        
+    # Кнопка Купоны KFC 2
+    elif call.data == 'next_kfc':
+        i = random.randint(10,20)
+        bot.send_message(call.message.chat.id, get_kfc(i))
+        keyboard_kfc_next = types.InlineKeyboardMarkup()
+        key_next = types.InlineKeyboardButton(text="Следующий", callback_data='kfc')
+        keyboard_kfc_next.add(key_next)
+        bot.send_message(call.message.chat.id, "Дальше?", reply_markup=keyboard_kfc_next)
+
+
+def get_kfc(i):
+    URL_KFC = "https://kfccpn.ru"
+    page = requests.get(URL_KFC)
+    soup = BeautifulSoup(page.text, 'lxml')
+
+    coupons = soup.find_all('div', class_="card-body")
+    prices = soup.find_all('div', class_="d-block mb-3")
+    descriptions = soup.find_all('div', class_="d-block mb-2")
+    imgs = soup.findAll('img', class_="rounded-0 img-fluid ml-2 wp-post-image")
+
+    coupons = [coupon.h3.text for coupon in coupons]
+    descriptions = [description.text for description in descriptions]
+    prices = [price.span.text for price in prices]
+    imgs = [img.get('src') for img in imgs]
+    return f"{imgs[i]}\n{coupons[i]}\n{prices[i]}\n{descriptions[i]}"
     
 if __name__ == '__main__':
     while True:

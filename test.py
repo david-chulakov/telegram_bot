@@ -86,8 +86,25 @@ def get_cult():
     URL_CULTURE = "https://www.culture.ru/news"
     page = requests.get(URL_CULTURE)
     soup = BeautifulSoup(page.text, 'html.parser')
-    culture_news = soup.find_all('a', class_="card-heading_title-link")
+    culture_news = soup.find_all()
     for new in culture_news[0:4]:
         print(f"https://www.culture.ru{new['href']}")
 
-print(get_cult())
+def get_kfc():
+    URL_KFC = "https://kfccpn.ru"
+    page = requests.get(URL_KFC)
+    soup = BeautifulSoup(page.text, 'lxml')
+
+    coupons = soup.find_all('div', class_="card-body")
+    prices = soup.find_all('div', class_="d-block mb-3")
+    descriptions = soup.find_all('div', class_="d-block mb-2")
+    imgs = soup.findAll('img', class_="rounded-0 img-fluid ml-2 wp-post-image")
+
+    coupons = [coupon.h3.text for coupon in coupons]
+    descriptions = [description.text for description in descriptions]
+    prices = [price.span.text for price in prices]
+    imgs = [img.get('src') for img in imgs]
+    
+    return imgs[0]
+
+print(get_kfc())
