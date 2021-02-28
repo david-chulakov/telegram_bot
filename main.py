@@ -183,7 +183,7 @@ def callback(call):
         key_next = types.InlineKeyboardButton(text="Следующий", callback_data='next_kfc')
         keyboard_kfc.add(key_next)
         bot.send_message(call.message.chat.id, "Дальше?", reply_markup=keyboard_kfc)
-        
+
     # Кнопка Купоны KFC 2
     elif call.data == 'next_kfc':
         i = random.randint(10,20)
@@ -197,7 +197,7 @@ def callback(call):
 def get_kfc(i):
     URL_KFC = "https://kfccpn.ru"
     page = requests.get(URL_KFC)
-    soup = BeautifulSoup(page.text, 'lxml')
+    soup = BeautifulSoup(page.text, 'html.parser')
 
     coupons = soup.find_all('div', class_="card-body")
     prices = soup.find_all('div', class_="d-block mb-3")
