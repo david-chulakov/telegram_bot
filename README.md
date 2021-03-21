@@ -1,3 +1,3 @@
 # telegram_bot
 
-Telegram parcing news bot for friends
+Telegarm bot with news and KFC coupons(Rus)
